@@ -52,13 +52,11 @@ router.delete('/flashcards/:id', authenticate, async (req, res) => {
   try {
     const flashcardId = req.params.id;
 
-    const flashcard = await Flashcard.findOne({ _id: flashcardId, user: req.userId });
 
+    const flashcard = await Flashcard.findByIdAndDelete({ _id: flashcardId });
     if (!flashcard) {
       return res.status(404).json({ error: 'Flashcard not found' });
     }
-
-    await flashcard.remove();
 
     res.status(200).json({ message: 'Flashcard deleted successfully' });
   } catch (error) {
