@@ -18,7 +18,6 @@ mongoose
     app.listen(port, ()=> {
         console.log('Node API App is running on on port 3000')
     })
-    console.log('2 ====> Connected to mongoDB')
 }).catch((error)=> {
     console.log(error)
 })

@@ -16,7 +16,7 @@ const generateAccessToken = function (user) {
 		process.env.ACCESS_TOKEN_SECRET_KEY || 'secretaccess';
 
 	const token = getToken(
-		{ id: user.id, email: user.email, tenant_id: user.tenant_id },
+		{ userId: user.userId},
 		accessTokenExpirationTime,
 		accessTokenScerete,
 	);
@@ -60,13 +60,17 @@ const authenticate = (req, res, next) => {
 	if (!token) {
 	  return res.status(401).json({ error: 'Authentication required' });
 	}
-	jwt.verify(token, SECRET_KEY, async (err, decoded) => {
-	  if (err) {
+
+	const data = validateToken(token, process.env.ACCESS_TOKEN_SECRET_KEY  || 'secretaccess');
+	
+	if(data && data.user){
+		req.userId = data.user.userId;
+		next();
+	}
+	else {
 		return res.status(401).json({ error: 'Invalid token' });
-	  }
-	  req.userId = decoded.userId;
-	  next();
-	});
+	}
+	
   };
 
 module.exports = {

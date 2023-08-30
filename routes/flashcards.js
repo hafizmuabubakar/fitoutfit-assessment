@@ -6,8 +6,6 @@ const {authenticate} = require('../utils/Authentication.js');
 
 const router = express.Router();
 
-const SECRET_KEY = process.env.SECRET_KEY || '7WzT$9b@KpD!!x7WzT$^9b@KpD!!xJv^2r^Q&mZg8$LJv^2rQ&mZg8$L7WzT$9b@KpD!!xJv^2r^Q&mZg8$L7WzT$9b@KpD!!xJv^2r^Q&mZg8$L'
-
 
 router.get('/flashcards', authenticate, async (req, res) => {
   try {
